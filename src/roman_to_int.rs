@@ -1,5 +1,6 @@
 /* 
-Runtime: 31 ms, faster than 6.01% of Rust online submissions for Roman to Integer.
+
+Runtime: 8 ms, faster than 36.78% of Rust online submissions for Roman to Integer.
 Memory Usage: 2.1 MB, less than 69.79% of Rust online submissions for Roman to Integer.
 
 */
@@ -7,7 +8,7 @@ Memory Usage: 2.1 MB, less than 69.79% of Rust online submissions for Roman to I
 fn roman_to_int(s: String) -> i32 {
     let mut number : i32 = 0;
     let mut minus : i32 = 0;
-    for c in 0..s.split("").collect::<Vec<&str>>().len() {
+    for (c,i) in s.split("").enumerate() {
         match s.split("").collect::<Vec<&str>>()[c] {
 
             "I" => match s.split("").collect::<Vec<&str>>()[c+1]{
