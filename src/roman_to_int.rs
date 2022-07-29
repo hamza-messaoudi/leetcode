@@ -1,43 +1,57 @@
 /* 
 
-Runtime: 8 ms, faster than 36.78% of Rust online submissions for Roman to Integer.
-Memory Usage: 2.1 MB, less than 69.79% of Rust online submissions for Roman to Integer.
+Runtime: 4 ms, faster than 65.17% of Rust online submissions for Roman to Integer.
+Memory Usage: 2.1 MB, less than 36.78% of Rust online submissions for Roman to Integer.
 
 */
 #[allow(dead_code)]
 fn roman_to_int(s: String) -> i32 {
     let mut number : i32 = 0;
-    let mut minus : i32 = 0;
-    for (c,i) in s.split("").enumerate() {
-        match s.split("").collect::<Vec<&str>>()[c] {
+    let mut previous_number : &str ="";
+    let iter = s.split("");
 
-            "I" => match s.split("").collect::<Vec<&str>>()[c+1]{
-                "V"=> {number+=4;minus+= 5;}
-                "X"=> {number+=9;minus+= 10;}
-                "L" |"C" |"D" |"M" |"I" |"" => number += 1,
-                _=> {},
-            },
-            "V" => number += 5,
-            "X" => match s.split("").collect::<Vec<&str>>()[c+1]{
-                "L"=> {number+=40;minus+= 50;}
-                "C"=> {number+=90;minus+= 100;}
-                "I" |"V" |"D" |"M" |"X" |"" => number += 10,
-                _=> {},
-            },
-            "L" => number += 50,
-            "C" => match s.split("").collect::<Vec<&str>>()[c+1]{
-                "D"=> {number+=400;minus+= 500;}
-                "M"=> {number+=900;minus+= 1000;}
-                "I" |"V" |"C" |"X" |"L" |"" => number += 100,
-                _=> println!("ERROR"),
-            },
-            "D" => number += 500,
-            "M" => number += 1000,
+    for i in iter {
+        match i {
+            
+            "I" => number +=1,
+            
+            "V" => {match previous_number {
+                "I" => number+= 3,
+                _=> number+= 5,
+            }},
+
+            "X" => {match previous_number {
+               "I" => number+= 8,
+               _=> number+= 10,
+            }},
+            
+            "L" => {match previous_number {
+                "X" => number+= 30,
+                _=> number+= 50,
+            }},
+            
+            "C" => {match previous_number {
+                "X" => number+= 80,
+                _=> number+= 100,
+            }},
+            
+            "D" => {match previous_number {
+                "C" => number+= 300,
+                _=> number+= 500,
+            }},
+
+            "M" => {match previous_number {
+                "C" => number+= 800,
+                _=> number+= 1000,
+            }},
+            
+            
 
             _=> {},
         }
+        previous_number = i;
     }
-    number - minus
+    number 
 }
 #[cfg(test)]
 mod tests {
